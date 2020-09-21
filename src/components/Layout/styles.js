@@ -6,7 +6,7 @@ export const breakpoints = {
   desktop: "@media screen and (min-width: 1440px)",
 };
 
-export const Wrapper = styled.div`
+export const WrapperStyled = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: ${(props) => props.direction};
@@ -22,5 +22,27 @@ export const Wrapper = styled.div`
 
   ${breakpoints.desktop} {
     max-width: 1000px;
+  }
+`;
+
+export const TitleStyled = styled.hgroup`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  text-align: ${(props) => props.textAlign};
+  margin-bottom: ${(props) => (props.isMainTitle ? 0 : 20)}px;
+
+  h1 {
+    font-size: ${(props) => (props.isMainTitle ? 18 : 14)}px;
+    text-transform: ${(props) => (props.isMainTitle ? "none" : "uppercase")};
+
+    ${breakpoints.tablet} {
+      font-size: ${(props) => (props.isMainTitle ? 19 : 15)}px;
+    }
+
+    ${breakpoints.laptop} {
+      font-size: ${(props) => (props.isMainTitle ? 24 : 16)}px;
+    }
   }
 `;

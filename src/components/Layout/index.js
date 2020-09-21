@@ -1,16 +1,25 @@
 import React from "react";
+import Header from "components/Header";
+import Footer from "components/Footer";
 import { Global, css } from "@emotion/core";
-import { Wrapper } from "./styles";
+import { WrapperStyled } from "./styles";
 
 export default function Layout({ children }) {
   return (
     <>
-      <Wrapper direction="column">{children}</Wrapper>
+      <Header />
+      <WrapperStyled direction="column">{children}</WrapperStyled>
+      <Footer />
       <Global
         styles={css`
           :root {
             --white: #ffffff;
-            --grey_dark: #505050;
+            --white_smoke: #ecf1ec;
+            --grey_dark_1: #4a4b4a;
+            --grey_dark_2: #6a6b6a;
+            --grey_dark_3: #7e7c7c;
+            --green_1: #02cd55;
+            --green_2: #3ae780;
           }
 
           *,
@@ -23,9 +32,14 @@ export default function Layout({ children }) {
 
           body {
             background-color: var(--white);
-            color: var(--grey_dark);
+            color: var(--grey_dark_1);
             font-family: "Open Sans", sans-serif;
             font-size: 16px;
+          }
+
+          a {
+            text-decoration: none;
+            color: var(--grey_dark_1);
           }
         `}
       />
