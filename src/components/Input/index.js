@@ -7,7 +7,9 @@ export default function Input({
   placeholder = "",
   register,
   type = "text",
+  errors,
 }) {
+  console.log(errors);
   return (
     <StyledInput>
       <label htmlFor={name}>{label}</label>

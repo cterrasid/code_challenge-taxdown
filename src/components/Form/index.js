@@ -1,13 +1,26 @@
 import React from "react";
 import Input from "components/Input";
+import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { StyledForm, StyledButton } from "./styles";
+import useUserContext, { ACTION } from "context/UserContext";
 
 export default function Form() {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
+  const [dispatch] = useUserContext();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (data, e) => {
+    dispatch({
+      type: ACTION.CREATE,
+      payload: {
+        id: _.uniqueId(0),
+        name: data.name,
+        surname: data.surname,
+        age: data.age,
+      },
+    });
+
+    e.target.reset();
   };
 
   return (
@@ -20,7 +33,12 @@ export default function Form() {
           required: true,
           maxLength: 40,
         })}
+        errors={errors}
       />
+      {errors?.name?.type === "required" && <span>This field is required</span>}
+      {errors?.name?.type === "maxLength" && (
+        <span>This field must be less than 40 characters</span>
+      )}
       <Input
         label="Surname"
         name="surname"
@@ -29,7 +47,12 @@ export default function Form() {
           required: true,
           maxLength: 40,
         })}
+        errors={errors}
       />
+      {errors?.name?.type === "required" && <span>This field is required</span>}
+      {errors?.name?.type === "maxLength" && (
+        <span>This field must be less than 40 characters</span>
+      )}
       <Input
         label="Age"
         name="age"
