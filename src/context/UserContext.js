@@ -1,8 +1,13 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 
 const UserContext = createContext({});
 
-const initialState = { users: [], loading: false, error: null };
+const initialState = {
+  users:
+    localStorage.getItem("users") === null
+      ? []
+      : JSON.parse(localStorage.getItem("users")),
+};
 
 export const ACTION = {
   CREATE: "CREATE_USER",
@@ -21,6 +26,10 @@ export const reducer = (state, action) => {
 
 export function UserContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(state.users));
+  }, [state.users]);
 
   return (
     <UserContext.Provider value={[state, dispatch]}>

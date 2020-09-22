@@ -7,7 +7,7 @@ import useUserContext, { ACTION } from "context/UserContext";
 
 export default function Form() {
   const { register, handleSubmit, errors } = useForm();
-  const [dispatch] = useUserContext();
+  const [state, dispatch] = useUserContext();
 
   const onSubmit = (data, e) => {
     dispatch({
@@ -19,7 +19,6 @@ export default function Form() {
         age: data.age,
       },
     });
-
     e.target.reset();
   };
 
