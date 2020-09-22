@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
+import React, { createContext, useContext, useMemo, useReducer } from "react";
+import { usersReducer } from "reducers/UsersReducer";
 
 const UserContext = createContext({});
 
@@ -7,35 +8,19 @@ const initialState = {
     localStorage.getItem("users") === null
       ? []
       : JSON.parse(localStorage.getItem("users")),
-};
-
-export const ACTION = {
-  CREATE: "CREATE_USER",
-  DELETE: "DELETE_USER",
-};
-
-export const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.CREATE:
-      return { users: [...state.users, action.payload] };
-
-    default:
-      return state;
-  }
+  isCreated: false,
 };
 
 export function UserContextProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(usersReducer, initialState);
 
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(state.users));
-  }, [state.users]);
+  localStorage.setItem("users", JSON.stringify(state.users));
 
-  return (
-    <UserContext.Provider value={[state, dispatch]}>
-      {children}
-    </UserContext.Provider>
-  );
+  const values = useMemo(() => {
+    return { state, dispatch };
+  }, [state, dispatch]);
+
+  return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 }
 
 export function useUserContext() {
