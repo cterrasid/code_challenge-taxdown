@@ -29,14 +29,14 @@ export const LinkStyled = styled(Link)`
   color: var(--white);
   text-align: center;
   text-decoration: none;
-  width: 6rem;
+  margin: 0 5px;
 
   :hover {
-    text-decoration: line-through;
+    font-weight: bold;
     transition: 0.5s ease;
   }
 
   ${breakpoints.desktop} {
-    width: 9rem;
+    margin: 0 10px;
   }
 `;

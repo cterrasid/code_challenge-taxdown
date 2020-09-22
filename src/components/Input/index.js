@@ -9,7 +9,6 @@ export default function Input({
   type = "text",
   errors,
 }) {
-  console.log(errors);
   return (
     <StyledInput>
       <label htmlFor={name}>{label}</label>
@@ -20,6 +19,10 @@ export default function Input({
         name={name}
         ref={register}
       />
+      {errors?.name?.type === "required" && <span>This field is required</span>}
+      {errors?.name?.type === "maxLength" && (
+        <span>This field must be less than 40 characters</span>
+      )}
     </StyledInput>
   );
 }

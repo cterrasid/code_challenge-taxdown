@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 export const StyledInput = styled.div`
+  width: 100%;
+
   input {
     height: 1rem;
     background-color: var(--white);
@@ -24,5 +26,9 @@ export const StyledInput = styled.div`
 
   label {
     font-size: 12px;
+  }
+
+  span {
+    font-size: 10px;
   }
 `;

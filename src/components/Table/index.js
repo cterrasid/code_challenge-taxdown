@@ -1,69 +1,81 @@
-import React, { useEffect, useMemo } from "react";
-import useUserContext from "context/UserContext";
+import React, { useMemo } from "react";
 import { useTable } from "react-table";
+import useUsers from "hooks/useUsers";
+import { MessageStyled, TableStyled } from "./styles";
+import { Link } from "react-router-dom";
 
 export default function Table() {
-  const [state] = useUserContext();
+  const { users } = useUsers();
 
   const data = useMemo(
     () =>
-      state.users.map((user) =>
+      users.map((user) =>
         Object.assign({
-          col1: user.id,
-          col2: user.name,
-          col3: user.surname,
-          col4: user.age,
+          col1: user.name,
+          col2: user.surname,
+          col3: user.age,
         })
       ),
-    [state.users]
+    [users]
   );
 
   const columns = useMemo(
     () => [
-      { Header: "Id", accessor: "col1" },
-      { Header: "Name", accessor: "col2" },
-      { Header: "Surname", accessor: "col3" },
-      { Header: "Age", accessor: "col4" },
+      { Header: "Name", accessor: "col1" },
+      { Header: "Surname", accessor: "col2" },
+      { Header: "Age", accessor: "col3" },
     ],
     []
   );
 
-  const tableInstance = useTable({ columns, data });
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = tableInstance;
+  } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      {
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
+    <>
+      {users.length > 0 ? (
+        <TableStyled {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      }
-    </table>
+            ))}
+          </thead>
+          {
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          }
+        </TableStyled>
+      ) : (
+        <MessageStyled>
+          <p>
+            There's not users right now. To create one, please click{" "}
+            <Link to="/create">here</Link>
+          </p>
+        </MessageStyled>
+      )}
+    </>
   );
 }

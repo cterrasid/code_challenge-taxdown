@@ -11,7 +11,8 @@ export const WrapperStyled = styled.div`
   display: flex;
   flex-direction: ${(props) => props.direction};
   height: 100%;
-  justify-content: center;
+  min-height: ${(props) => props.minHeight};
+  justify-content: ${(props) => props.justify || "center"};
   padding: 20px;
   width: 100%;
 

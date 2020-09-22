@@ -8,7 +8,9 @@ export default function Layout({ children }) {
   return (
     <>
       <Header />
-      <WrapperStyled direction="column">{children}</WrapperStyled>
+      <WrapperStyled direction="column" minHeight="60vh" justify="flex-start">
+        {children}
+      </WrapperStyled>
       <Footer />
       <Global
         styles={css`
@@ -20,6 +22,7 @@ export default function Layout({ children }) {
             --grey_dark_3: #7e7c7c;
             --green_1: #02cd55;
             --green_2: #3ae780;
+            --green_3: #6cd697;
           }
 
           *,

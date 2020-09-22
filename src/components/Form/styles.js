@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { breakpoints } from "components/Layout/styles";
 
-export const StyledForm = styled.form`
+export const FormStyled = styled.form`
   align-self: center;
   background-color: var(--white);
   display: grid;
@@ -15,12 +15,12 @@ export const StyledForm = styled.form`
   }
 `;
 
-export const StyledButton = styled.button`
+export const ButtonStyled = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  width: 40%;
-  height: 35px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   border-radius: 5px;
   color: var(--white_smoke);
   font-weight: bold;
