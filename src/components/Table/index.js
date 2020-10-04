@@ -14,6 +14,7 @@ export default function Table() {
           col1: user.name,
           col2: user.surname,
           col3: user.age,
+          col4: user.gender,
         })
       ),
     [users]
@@ -24,6 +25,7 @@ export default function Table() {
       { Header: "Name", accessor: "col1" },
       { Header: "Surname", accessor: "col2" },
       { Header: "Age", accessor: "col3" },
+      { Header: "Gender", accessor: "col4" },
     ],
     []
   );

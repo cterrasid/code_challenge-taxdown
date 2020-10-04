@@ -8,6 +8,8 @@ export default function Input({
   register,
   type = "text",
   errors,
+  defaultValue,
+  max,
 }) {
   return (
     <StyledInput>
@@ -17,6 +19,8 @@ export default function Input({
         id={name}
         placeholder={placeholder}
         name={name}
+        maxLength={max}
+        defaultValue={defaultValue}
         ref={register}
       />
       {errors?.name?.type === "required" && <span>This field is required</span>}

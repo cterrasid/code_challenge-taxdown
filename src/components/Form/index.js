@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Input from "components/Input";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { FormStyled, ButtonStyled } from "./styles";
 import useUsers from "hooks/useUsers";
 import { Link } from "react-router-dom";
 import { MessageStyled } from "components/Table/styles";
+import inputs from "./inputs.json";
 
 export default function Form() {
   const { register, handleSubmit, errors } = useForm();
@@ -17,6 +18,7 @@ export default function Form() {
       name: data.name,
       surname: data.surname,
       age: data.age,
+      gender: data.gender,
     };
 
     createUserSuccessfully(user);
@@ -30,33 +32,38 @@ export default function Form() {
 
   return (
     <FormStyled onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        label="Name"
-        name="name"
-        placeholder="Your first name"
-        register={register({
-          required: true,
-          maxLength: 20,
-        })}
-        errors={errors}
-      />
-      <Input
-        label="Surname"
-        name="surname"
-        placeholder="Your last name"
-        register={register({
-          required: true,
-          maxLength: 40,
-        })}
-        errors={errors}
-      />
-      <Input
-        label="Age"
-        name="age"
-        type="number"
-        placeholder="Your age"
-        register={register({ min: 1 })}
-      />
+      {inputs.inputFields.map((input) =>
+        input.type !== "singleselect" ? (
+          <Input
+            key={input.id}
+            label={input.label}
+            type={input.type}
+            name={input.id}
+            placeholder={input.placeholder}
+            max={input.maxLength}
+            defaultValue={input.defaultValue}
+            register={register({
+              required: true,
+            })}
+            errors={errors}
+          />
+        ) : (
+          <Fragment key={input.id}>
+            <label htmlFor={input.label}>{input.label}</label>
+            <select
+              name={input.id}
+              id={input.id}
+              ref={register({ required: true })}
+            >
+              {input.options.map((option, index) => (
+                <option value={option} key={option} selected={index === 1}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </Fragment>
+        )
+      )}
       <ButtonStyled width="40%" height="35px">
         Save
       </ButtonStyled>
